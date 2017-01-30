@@ -12,6 +12,10 @@ public class User{
 	private ArrayList<Publication> publications;
 	private ArrayList<User> friends;
 
+	public User(){
+		
+	}
+
 	public User(String login){
 		this.login = login;
 	}

@@ -5,6 +5,18 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>TweetBook</title>
+    <%@ page import="java.util.*" %>
+    <%@ page import="java.sql.*" %>
+    <%@ page import="java.sql.ResultSet" %>
+    <%@ page import="java.sql.ResultSetMetaData" %>
+    <%@ page session="true" %>
+    <%@ page contentType="text/html; charset=UTF-8" %>
+    <!--   import de servlet   -->
+    <%@ page import="java.io.*" %>
+    <%@ page import="tools.*" %>
+    <%@ page import="javax.servlet.*" %>
+    <%@ page import="javax.servlet.http.*" %>
+    <%@ page import="javax.servlet.annotation.WebServlet" %>
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -16,6 +28,25 @@
     <link rel="icon" href="http://moodle.univ-lille1.fr/theme/image.php/ulille/theme/1484841149/favicon" />
   </head>
   <body>
+
+  <%
+    System.out.println("test");
+    Model model = new Model();
+    model.initialize();
+    User user1 = model.getUserByLogin(request.getUserPrincipal().getName());
+
+      //ajout des publications et des amis au profil
+      model.initialize();
+      user1.setPublications(model.getPublication(user1));
+      model.initialize();
+      user1.setFriends(model.getFriend(user1));
+
+      //création de la session
+      session = request.getSession(true);
+      session.setAttribute("user", user1);
+
+  %>
+  <jsp:useBean id="user" type="tools.User" scope="session" />
       <div class="wrapper">
         <div class="box">
           <div class="row row-offcanvas row-offcanvas-left">
@@ -42,7 +73,7 @@
           </ul>
           <ul class="list-unstyled hidden-xs" id="sidebar-footer">
             <li>
-              <a href="http://www.bootply.com"><h3><a href="#" class="btn btn-info btn-lg">
+              <a href="http://www.bootply.com"><h3><a href="deconnexion" class="btn btn-info btn-lg">
               <span class="glyphicon glyphicon-log-out"></span> Log out
               </a></h3>
             </li>
@@ -67,7 +98,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                  <a href="/" class="navbar-brand logo">t</a>
+                  <a href="./profil.jsp" class="navbar-brand logo">t</a>
                 </div>
                 <nav class="collapse navbar-collapse" role="navigation">
                   <form class="navbar-form navbar-left">
@@ -93,11 +124,11 @@
               <div class="col-sm-5">
                 <div class="panel panel-default">
                   <div class="panel-thumbnail">
-                    <img src="/assets/example/bg_5.jpg" class="img-responsive">(Requete image)
+                    <img src=<%= user.getProfilPhoto() %> class="img-responsive">
                   </div>
                   <div class="panel-body">
-                    <p class="lead">(Requete nom)Urbanization</p>
-                    <p>(Requete nombre d'amis) amis</p>
+                    <p class="lead"><%= user.getFirstName() %>  <%= user.getLastName() %></p>
+                    <p><%= user.getFirstName() %> amis</p>
                     <p>
                       (Requete image des 5 premiers amis)<br>
                       <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
@@ -139,7 +170,7 @@
               <div class="col-sm-7">
                 <div class="well"> 
                   <form class="form-horizontal" role="form">
-                    <h4>Quoi de neuf ?</h4>
+                    <h4>Quoi de neuf ?<%= user.getLastName() %></h4>
                     <div class="form-group" style="padding:14px;">
                       <textarea class="form-control" placeholder="Update your status"></textarea>
                     </div>

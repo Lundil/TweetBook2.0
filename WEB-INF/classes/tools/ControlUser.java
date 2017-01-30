@@ -47,7 +47,7 @@ public class ControlUser extends HttpServlet{
 					response.sendRedirect("../profil.jsp");
 				}
 				else
-					response.sendRedirect("../ysufiudyufqiuyqyd.html");
+					response.sendRedirect("../error.html");
 			}
 			//ServletContext servletContext = getServletContext();
 			//RequestDispatcher dispatcher = servletContext.getRequestDispatcher("/index.html");

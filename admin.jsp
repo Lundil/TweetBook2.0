@@ -54,7 +54,7 @@
           </ul>
           <ul class="list-unstyled hidden-xs" id="sidebar-footer">
             <li>
-              <a href="http://www.bootply.com"><h3><a href="#" class="btn btn-info btn-lg">
+              <a href="http://www.bootply.com"><h3><a href="deconnexion" class="btn btn-info btn-lg">
               <span class="glyphicon glyphicon-log-out"></span> Log out
               </a></h3>
             </li>
@@ -79,7 +79,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                  <a href="/" class="navbar-brand logo">t</a>
+                  <a href="./profil.jsp" class="navbar-brand logo">t</a>
                 </div>
                 <nav class="collapse navbar-collapse" role="navigation">
                   <form class="navbar-form navbar-left">

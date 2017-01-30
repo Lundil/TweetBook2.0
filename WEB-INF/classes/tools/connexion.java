@@ -12,6 +12,6 @@ public class connexion extends HttpServlet
 {
 	public void service( HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
 	{
-		response.sendRedirect("./index.html");	
+		response.sendRedirect("./profil.jsp");
 	}
 }
