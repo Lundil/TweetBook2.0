@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/ProjetWeb" docBase="ProjetWeb" debug="99">
+
+  <!-- Definition du pool -->
+  <Resource name="database" auth="Container" type="javax.sql.DataSource"
+  maxActive="8" maxIdle="4" maxWait="10000"
+  username="catricea" password="moi" driverClassName="org.postgresql.Driver"
+  url="jdbc:postgresql://psqlserv/da2i" />
+
+<!-- -->
+   <Realm  className="org.apache.catalina.realm.DataSourceRealm" debug="99"
+    digest="md5"
+           dataSourceName="database" localDataSource="true"
+           userTable="users" userNameCol="login" userCredCol="password"
+           userRoleTable="roles" roleNameCol="role">
+           <!-- <CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler" algorithm="md5" /> -->
+    </Realm>
+
+
+  <!-- Definition d'une valve d'acces -->
+  <Valve className="org.apache.catalina.valves.AccessLogValve"
+           prefix="projet_web_access1." suffix=".txt"
+           pattern="common"/>
+ 
+</Context>

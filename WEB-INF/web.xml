@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
+    "http://java.sun.com/j2ee/dtds/web-app_2.2.dtd">
+
+<web-app>
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <security-constraint>
+     <web-resource-collection>
+       <web-resource-name>Administrateur</web-resource-name>
+         <url-pattern>/profil.jsp</url-pattern>
+         <url-pattern>/fil.jsp</url-pattern>
+         <url-pattern>/admin.jsp</url-pattern>
+         <url-pattern>/amis.jsp</url-pattern>
+         <url-pattern>/connexion</url-pattern>
+     </web-resource-collection>
+      <auth-constraint>
+         <role-name>role1</role-name>
+         <role-name>role2</role-name>
+      </auth-constraint>
+    </security-constraint>
+
+
+    <!-- La maniere dont la page de login est affichee -->
+    <login-config>
+      <auth-method>FORM</auth-method>
+      <form-login-config>
+        <form-login-page>signup.html</form-login-page>
+        <form-error-page>erreur.html</form-error-page>
+      </form-login-config>
+    </login-config>
+    
+
+    <!-- La liste des differents roles -->
+    <security-role>
+      <role-name>role1</role-name>
+    </security-role>
+    <security-role>
+      <role-name>role2</role-name>
+    </security-role> 
+
+</web-app>
