@@ -59,7 +59,7 @@ public class Model{
 	public int getNumberOfFriend(User user){
 		int count = -1;
 		try{
-			statement = connection.prepareStatement("select count(*) from users where IDUser1 = ?");
+			statement = connection.prepareStatement("select count(*) from friendWith where IDUser1 = ?");
 			statement.setInt(1,user.getId());
 			result = statement.executeQuery();
 			result.next();
