@@ -14,6 +14,7 @@
     <%@ page contentType="text/html; charset=UTF-8" %>
     <!--   import de servlet   -->
     <%@ page import="java.io.*" %>
+    <%@ page import="tools.*" %>
     <%@ page import="javax.servlet.*" %>
     <%@ page import="javax.servlet.http.*" %>
     <%@ page import="javax.servlet.annotation.WebServlet" %>
@@ -26,6 +27,37 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link rel="icon" href="http://moodle.univ-lille1.fr/theme/image.php/ulille/theme/1484841149/favicon" />
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(document).ready(function() {
+      var data = {}; 
+      $("#browsers option").each(function(i,el) {  
+         data[$(el).data("value")] = $(el).val();
+      });
+      // `data` : object of `data-value` : `value`
+      console.log(data, $("#browsers option").val());
+
+
+    document.querySelector('input[list]').addEventListener('input', function(e) {
+    var input = e.target,
+        list = input.getAttribute('list'),
+        options = document.querySelectorAll('#' + list + ' option'),
+        hiddenInput = document.getElementById(input.id + '-hidden'),
+        inputValue = input.value;
+
+    hiddenInput.value = inputValue;
+
+    for(var i = 0; i < options.length; i++) {
+        var option = options[i];
+
+        if(option.innerText === inputValue) {
+            hiddenInput.value = option.getAttribute('data-value');
+            break;
+        }
+    }
+});
+});
+    </script>
   </head>
   <body>
       <div class="wrapper">
@@ -82,16 +114,31 @@
                   <a href="./profil.jsp" class="navbar-brand logo">t</a>
                 </div>
                 <nav class="collapse navbar-collapse" role="navigation">
-                  <form class="navbar-form navbar-left">
+                  <form class="navbar-form navbar-left" method="GET" action="./other.jsp">
                     <div class="input-group input-group-sm" style="max-width:360px;">
-                      <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                      <!-- Hidden -->
+                      <input type="hidden" value="true" name="friendToDisplayProfil">
+                      <input type="hidden" name="friendToDisplayProfilId" id="answerInput-hidden">
+                      <!-- Id recupere -->
+                      <input list="suggestionList" type="text" class="form-control" placeholder="Rechercher un ami" name="friendToDisplayProfilId" id="answerInput">
+                      <!-- New form -->
+                      <datalist id="suggestionList" name="friendToDisplayProfilId">
+                        <%  
+                          Model model = new Model();
+                          model.initialize();
+                          for(User friend : model.getAllUsers()){ %>
+                          <!-- value = affichage datavalue = donnée -->
+                            <option data-value="<%= friend.getId() %>"><%= friend.getFirstName() %></option>
+                        <%}
+                        %>
+                      </datalist>
                       <div class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                           <i class="glyphicon glyphicon-search"></i>
                         </button>
                       </div>
                     </div>
-                  </form>
+                  </form>          
                 </nav>
               </div>
               <!-- /top nav -->
