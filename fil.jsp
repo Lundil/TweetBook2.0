@@ -14,6 +14,7 @@
     <%@ page contentType="text/html; charset=UTF-8" %>
     <!--   import de servlet   -->
     <%@ page import="java.io.*" %>
+    <%@ page import="tools.*" %>
     <%@ page import="javax.servlet.*" %>
     <%@ page import="javax.servlet.http.*" %>
     <%@ page import="javax.servlet.annotation.WebServlet" %>
@@ -27,6 +28,9 @@
     <link rel="icon" href="http://moodle.univ-lille1.fr/theme/image.php/ulille/theme/1484841149/favicon" />
   </head>
   <body>
+
+      <jsp:useBean id="user" type="tools.User" scope="session" />
+
       <div class="wrapper">
         <div class="box">
           <div class="row row-offcanvas row-offcanvas-left">
@@ -103,17 +107,17 @@
 
               <!-- main col right -->
               <div class="col-sm-7">
-                <% for(Publication publication : user.getFriendsPublication()){ %>
+                <% Model model = new Model(); %>
+                <% model.initialize(); %>
+                <% for(Publication publication : model.getFriendsPublication(user)){ %>
 
                     <div class="well">
                       <div class="panel panel-default">
                         <div class="panel-heading"><h4><%= publication.getTitle() %></h4></div>
                         <div class="panel-body">
-                          <p><%= publication.getFirstName() %> <%= publication.getLastName() %></p>
-                          (Requete image, nom, date de l'auteur du post)
+                          <p>publié par <%= publication.getFirstNameAuthor() %> <%= publication.getLastNameAuthor() %><br>le <%= publication.getDate() %></p>
                           <hr>
                           <p><%= publication.getContent() %></p>
-                          (Requete image du post si existe)
                           <div class="clearfix"></div>
                           <hr>
                         </div>
