@@ -30,20 +30,21 @@
   <body>
 
   <%
-    System.out.println("test");
     Model model = new Model();
     model.initialize();
     User user1 = model.getUserByLogin(request.getUserPrincipal().getName());
 
-      //ajout des publications et des amis au profil
-      model.initialize();
-      user1.setPublications(model.getPublication(user1));
-      model.initialize();
-      user1.setFriends(model.getFriend(user1));
+    //ajout des publications et des amis au profil
+    model.initialize();
+    user1.setPublications(model.getPublication(user1));
+    model.initialize();
+    user1.setFriends(model.getFriend(user1));
+    model.initialize();
+    int countFriend = model.getNumberOfFriend(user1);
 
-      //création de la session
-      session = request.getSession(true);
-      session.setAttribute("user", user1);
+    //création de la session
+    session = request.getSession(true);
+    session.setAttribute("user", user1);
 
   %>
   <jsp:useBean id="user" type="tools.User" scope="session" />
@@ -128,7 +129,7 @@
                   </div>
                   <div class="panel-body">
                     <p class="lead"><%= user.getFirstName() %>  <%= user.getLastName() %></p>
-                    <p><%= user.getFirstName() %> amis</p>
+                    <p><%= countFriend %> amis</p>
                     <p>
                       (Requete image des 5 premiers amis)<br>
                       <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
@@ -141,7 +142,7 @@
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <a href="friend.jsp" class="pull-right">En voir +</a> <h4>Ajouter des amis</h4>
+                    <a href="amis.jsp" class="pull-right">En voir +</a> <h4>Ajouter des amis</h4>
                   </div>
                   <div class="panel-body">
                     (Requete image des 5 premiers amis de la base de donnee)
@@ -161,7 +162,12 @@
                     <a href="infos.jsp" class="pull-right">Modifier</a> <h4>A propos</h4>
                   </div>
                   <div class="panel-body">
-                    (Requete lastName firstName birthDay birthPlace email address phoneNumber<br>
+                  <%= user.getFirstName() %> <%= user.getLastName() %><br>
+                  <%= user.getDate() %><br>
+                  <%= user.getPlace() %><br>
+                  <%= user.getMail() %><br>
+                  <%= user.getAddress() %><br>
+                  <%= user.getPhoneNumber() %><br>
                   </div>
                 </div>
               </div>
@@ -170,7 +176,7 @@
               <div class="col-sm-7">
                 <div class="well"> 
                   <form class="form-horizontal" role="form">
-                    <h4>Quoi de neuf ?<%= user.getLastName() %></h4>
+                    <h4>Quoi de neuf <%= user.getFirstName() %> ?</h4>
                     <div class="form-group" style="padding:14px;">
                       <textarea class="form-control" placeholder="Update your status"></textarea>
                     </div>
