@@ -151,15 +151,39 @@
               <!-- content -->                      
               <div class="row">
               <!-- main col left --> 
-              <div class="col-sm-5">
+              <div class="col-sm-6">
                 <div class="panel panel-default">
-                <div class="panel-heading">
+                    <div class="panel-heading">
                     <h4>Vos amis</h4>
                   </div>
                   <div class="panel-body">
                   <%for(User friend : user.getFriends()){ %>
                       <p class="lead"><%= friend.getFirstName()%> <%= friend.getLastName() %></p>
                   <%} %>
+                  </div>
+                </div>
+              </div>
+              <!-- main col right --> 
+              <div class="col-sm-6">
+                <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Ajouter amis</h4>
+                  </div>
+                  <div class="panel-body">
+                  <p class="lead">
+                  <%
+                  model.initialize();
+                  for(User friend : model.getAllUsers()){
+                  if(friend.getId() != user.getId()){
+                  %>
+                    <form class="navbar-form navbar-left" method="GET" action="./tools/ControlFriend">
+                      <input class="btn btn-primary pull-right" type="submit" value="<%= friend.getFirstName() %> <%= friend.getLastName() %>"></input>
+                      <input type="hidden" value="<%= friend.getId() %>" name="addFriendId"></input>
+                      <input type="hidden" value="true" name="addFriend"></input>
+                    </form>
+                    
+                  <%}}%>
+                  </p>
                   </div>
                 </div>
               </div>

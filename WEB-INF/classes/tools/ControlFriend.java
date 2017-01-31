@@ -22,7 +22,7 @@ public class ControlFriend extends HttpServlet{
 				model.initialize();
 
 				//supprime un utilisateur du groupe
-				if(request.getParameter("removeFriend").equals("true")){
+				if(request.getParameter("removeFriend") != null){
 					model.removeFriend(
 					Integer.parseInt(request.getParameter("removeFriendId")), user);
 					user.setFriends(model.getFriend(user));
@@ -30,14 +30,14 @@ public class ControlFriend extends HttpServlet{
 				}
 
 				//récupère les infos de l'utilisateur pour afficher son profil
-				else if(request.getParameter("friendToDisplayProfil").equals("true")){
+				else if(request.getParameter("friendToDisplayProfil") != null){
 					User friend = model.getFriend(Integer.parseInt(request.getParameter(request.getParameter("friendToDisplayProfilId"))));
 					session.setAttribute(("friendToDisplay"), friend);
 					response.sendRedirect("friendProfil.jsp");
 				}
 
 				//ajoute un ami
-				else if(request.getParameter("addFriend").equals("true")){
+				else if(request.getParameter("addFriend") != null){
 					model.addFriend(Integer.parseInt(request.getParameter(request.getParameter("addFriendId"))), user);
 					user.setFriends(model.getFriend(user));
 					response.sendRedirect("potentialFriends.jsp");
