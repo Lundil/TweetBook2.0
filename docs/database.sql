@@ -19,15 +19,15 @@ create table Users(
 	address varchar(200),
 	phoneNumber integer,
 	login varchar(100) not null unique,
-	password varchar(100) not null,
+	password varchar(20) not null,
 	profilPhoto varchar(200)
 );
 
 -- création de la table publication avec un ID, un titre obligatoire et un le nombre de like à 0
 create table Publications(
 	IDPublication serial primary key,
-	titlePublication varchar(20) not null,
-	content varchar(200),
+	titlePublication varchar(200) not null,
+	content varchar(500),
 	likesNumber integer default 0,
 	IDAuthor integer references Users(IDUser)
 		on update cascade

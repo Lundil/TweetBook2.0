@@ -28,29 +28,19 @@
     <link rel="icon" href="http://moodle.univ-lille1.fr/theme/image.php/ulille/theme/1484841149/favicon" />
   </head>
   <body>
-<%  Model model = new Model();
-    model.initialize();
-    String idPerso = request.getParameter("idPersonne");
-    User user2 = model.getUserByLogin(request.getUserPrincipal().getName()); %>
-  <%
     
-    model.initialize();
-    User user1 = model.getUserByLogin(request.getUserPrincipal().getName());
-
+  <jsp:useBean id="user" type="tools.User" scope="session" />
+  <%
+    User other = (User) session.getAttribute("other"); 
     //ajout des publications et des amis au profil
     model.initialize();
-    user1.setPublications(model.getPublication(user1));
+    other.setPublications(model.getPublication(other));
     model.initialize();
-    user1.setFriends(model.getFriend(user1));
+    other.setFriends(model.getFriend(other));
     model.initialize();
-    int countFriend = model.getNumberOfFriend(user1);
+    int countOtherFriend = model.getNumberOfFriend(other);
+    %>
 
-    //création de la session
-    session = request.getSession(true);
-    session.setAttribute("user", user1);
-
-  %>
-  <jsp:useBean id="user" type="tools.User" scope="session" />
       <div class="wrapper">
         <div class="box">
           <div class="row row-offcanvas row-offcanvas-left">
@@ -128,21 +118,20 @@
               <div class="col-sm-5">
                 <div class="panel panel-default">
                   <div class="panel-thumbnail">
-                    <img src=<%= user.getProfilPhoto() %> class="img-responsive">
+                    <img src=<%= other.getProfilPhoto() %> class="img-responsive">
                   </div>
                   <div class="panel-body">
-                    <p class="lead"><%= user.getFirstName() %>  <%= user.getLastName() %></p>
+                    <p class="lead"><%= other.getFirstName() %>  <%= other.getLastName() %></p>
                   </div>
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h4>Vos amis (<%= countFriend %>)</h4>
+                    <h4>Vos amis (<%= countOtherFriend %>)</h4>
                   </div>
                   <div class="panel-body">
-                    (Requete image des 5 premiers amis de la base de donnee)
                     <ul class="list-unstyled">
                     <% model.initialize();
-                    for(String photo : model.getProfilPhotoOf5Friend(user)) { %>
+                    for(String photo : model.getProfilPhotoOf5Friend(other)) { %>
                         <li>
                           <img src="<%= photo%>" width="28px" height="28px">
                         </li>
@@ -154,12 +143,12 @@
                   <div class="panel-heading"><h4>A propos</h4>
                   </div>
                   <div class="panel-body">
-                  <%= user.getFirstName() %> <%= user.getLastName() %><br>
-                  <%= user.getDate() %><br>
-                  <%= user.getPlace() %><br>
-                  <%= user.getMail() %><br>
-                  <%= user.getAddress() %><br>
-                  <%= user.getPhoneNumber() %><br>
+                  <%= other.getFirstName() %> <%= other.getLastName() %><br>
+                  <%= other.getDate() %><br>
+                  <%= other.getPlace() %><br>
+                  <%= other.getMail() %><br>
+                  <%= other.getAddress() %><br>
+                  <%= other.getPhoneNumber() %><br>
                   </div>
                 </div>
               </div>
