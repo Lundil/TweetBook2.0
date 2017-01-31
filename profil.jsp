@@ -105,6 +105,7 @@
                   <form class="navbar-form navbar-left">
                     <div class="input-group input-group-sm" style="max-width:360px;">
                       <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                      
                       <div class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                           <i class="glyphicon glyphicon-search"></i>
@@ -136,7 +137,6 @@
                     <h4>Vos amis (<%= countFriend %>)</h4>
                   </div>
                   <div class="panel-body">
-                    (Requete image des 5 premiers amis de la base de donnee)
                     <ul class="list-unstyled">
                     <% model.initialize();
                     for(String photo : model.getProfilPhotoOf5Friend(user)) { %>
