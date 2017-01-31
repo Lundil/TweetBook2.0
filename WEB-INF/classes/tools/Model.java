@@ -300,7 +300,7 @@ public class Model{
 	public ArrayList<Publication> getPublication(User user){
 		ArrayList<Publication> publications = new ArrayList<Publication>();
 		try{
-			statement = connection.prepareStatement("select p.titlePublication, p.content, p.date, u.lastName, u.firstName from publications p inner join users u on u.IDUser = p.IDAuthor where IDAuthor = ? group by p.date, p.titlePublication, p.content, u.lastName, u.firstName  order by date");
+			statement = connection.prepareStatement("select p.titlePublication, p.content, p.date, u.lastName, u.firstName from publications p inner join users u on u.IDUser = p.IDAuthor where IDAuthor = ? group by p.date, p.titlePublication, p.content, u.lastName, u.firstName  order by p.date desc");
 			statement.setInt(1,user.getId());
 			result = statement.executeQuery();
 			Publication publication;
@@ -330,7 +330,7 @@ public class Model{
 	public ArrayList<Publication> getFriendsPublication(User user){
 		ArrayList<Publication> publications = new ArrayList<Publication>();
 		try{
-			statement = connection.prepareStatement("select p.titlePublication, p.content, p.date, u.lastName, u.firstName from publications p inner join users u on u.IDUser = p.IDAuthor where IDAuthor in (select IDUser2 from friendWith where IDUser1 = ?) group by p.date,p.titlePublication, p.content, u.lastName, u.firstName order by date");
+			statement = connection.prepareStatement("select p.titlePublication, p.content, p.date, u.lastName, u.firstName from publications p inner join users u on u.IDUser = p.IDAuthor where IDAuthor in (select IDUser2 from friendWith where IDUser1 = ?) group by p.date,p.titlePublication, p.content, u.lastName, u.firstName order by p.date desc");
 			statement.setInt(1,user.getId());
 			result = statement.executeQuery();
 			Publication publication;
