@@ -30,16 +30,16 @@
   <body>
 
   <%
-    System.out.println("test");
     Model model = new Model();
     model.initialize();
-  User user1 = model.getUserByLogin(request.getUserPrincipal().getName());
+    User user1 = model.getUserByLogin(request.getUserPrincipal().getName());
 
     //ajout des publications et des amis au profil
     model.initialize();
     user1.setPublications(model.getPublication(user1));
     model.initialize();
     user1.setFriends(model.getFriend(user1));
+    model.initialize();
     int countFriend = model.getNumberOfFriend(user1);
 
     //création de la session
@@ -162,7 +162,12 @@
                     <a href="infos.jsp" class="pull-right">Modifier</a> <h4>A propos</h4>
                   </div>
                   <div class="panel-body">
-                    (Requete lastName firstName birthDay birthPlace email address phoneNumber<br>
+                  <%= user.getFirstName() %> <%= user.getLastName() %><br>
+                  <%= user.getDate() %><br>
+                  <%= user.getPlace() %><br>
+                  <%= user.getMail() %><br>
+                  <%= user.getAddress() %><br>
+                  <%= user.getPhoneNumber() %><br>
                   </div>
                 </div>
               </div>
@@ -171,7 +176,7 @@
               <div class="col-sm-7">
                 <div class="well"> 
                   <form class="form-horizontal" role="form">
-                    <h4>Quoi de neuf ?<%= user.getLastName() %></h4>
+                    <h4>Quoi de neuf <%= user.getFirstName() %> ?</h4>
                     <div class="form-group" style="padding:14px;">
                       <textarea class="form-control" placeholder="Update your status"></textarea>
                     </div>
