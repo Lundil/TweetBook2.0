@@ -125,7 +125,13 @@
                 <nav class="collapse navbar-collapse" role="navigation">
                   <form class="navbar-form navbar-left">
                     <div class="input-group input-group-sm" style="max-width:360px;">
-                      <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                      <input list="ami" type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                      <datalist id="ami">
+                        <option value="Meteor">
+                        <option value="Pils">
+                        <option value="Kronenbourg">
+                        <option value="Grimbergen">
+                      </datalist>
                       <div class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                           <i class="glyphicon glyphicon-search"></i>
