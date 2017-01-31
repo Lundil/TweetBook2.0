@@ -174,7 +174,7 @@
                   <%
                   model.initialize();
                   for(User friend : model.getAllUsers()){
-                  if(friend.getId() != user.getId()){
+                    if(friend.getId() != user.getId() && !user.containsFriend(friend.getId())){
                   %>
                     <form class="navbar-form navbar-left" method="GET" action="./tools/ControlFriend">
                       <input class="btn btn-primary pull-right" type="submit" value="<%= friend.getFirstName() %> <%= friend.getLastName() %>"></input>
@@ -182,7 +182,7 @@
                       <input type="hidden" value="true" name="addFriend"></input>
                     </form>
                     
-                  <%}}%>
+                  <% } } %>
                   </p>
                   </div>
                 </div>
