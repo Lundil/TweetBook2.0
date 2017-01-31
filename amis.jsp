@@ -123,15 +123,17 @@
                   <a href="./profil.jsp" class="navbar-brand logo">t</a>
                 </div>
                 <nav class="collapse navbar-collapse" role="navigation">
-                  <form class="navbar-form navbar-left" method="POST" action="./other.jsp">
+                  <form class="navbar-form navbar-left" method="GET" action="./other.jsp">
                     <div class="input-group input-group-sm" style="max-width:360px;">
                       <input list="amiRecherche" type="text" class="form-control" placeholder="Rechercher un ami" name="rechercheAmi" id="">
                       <datalist id="amiRecherche">
-                        <%for(User friend : user.getFriends()){ %>
+                        <% Model model = new Model();
+                        model.initialize();
+                        for(User friend : model.getAllUsers()){ %>
                             <option value="<%= friend.getLastName() %>">
+                            <input type="hidden" value="<%= friend.getId() %>" name="idPersonne"></input>
                         <%} %>
                       </datalist>
-                      <input type="hidden" value="<%= user.getId() %>" name="idPersonne"></input>
                       <div class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                           <i class="glyphicon glyphicon-search"></i>
