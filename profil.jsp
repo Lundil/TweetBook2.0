@@ -33,17 +33,18 @@
     System.out.println("test");
     Model model = new Model();
     model.initialize();
-    User user1 = model.getUserByLogin(request.getUserPrincipal().getName());
+  User user1 = model.getUserByLogin(request.getUserPrincipal().getName());
 
-      //ajout des publications et des amis au profil
-      model.initialize();
-      user1.setPublications(model.getPublication(user1));
-      model.initialize();
-      user1.setFriends(model.getFriend(user1));
+    //ajout des publications et des amis au profil
+    model.initialize();
+    user1.setPublications(model.getPublication(user1));
+    model.initialize();
+    user1.setFriends(model.getFriend(user1));
+    int countFriend = model.getNumberOfFriend(user1);
 
-      //création de la session
-      session = request.getSession(true);
-      session.setAttribute("user", user1);
+    //création de la session
+    session = request.getSession(true);
+    session.setAttribute("user", user1);
 
   %>
   <jsp:useBean id="user" type="tools.User" scope="session" />
@@ -128,7 +129,7 @@
                   </div>
                   <div class="panel-body">
                     <p class="lead"><%= user.getFirstName() %>  <%= user.getLastName() %></p>
-                    <p><%= user.getFirstName() %> amis</p>
+                    <p><%= countFriend %> amis</p>
                     <p>
                       (Requete image des 5 premiers amis)<br>
                       <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
