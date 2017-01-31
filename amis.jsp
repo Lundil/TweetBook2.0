@@ -27,59 +27,35 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link rel="icon" href="http://moodle.univ-lille1.fr/theme/image.php/ulille/theme/1484841149/favicon" />
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-      $(document).ready(function(){
-  alert("Coucou");
-  function ajax(){ 
-      $.ajax({
-         url : 'http://localhost:8080/jquery/servlet/AppelAjaxPersonne',
-         type : 'GET',
-         dataType : 'text',
-         data: {
-              deb: $("#deb").val()
-          },
-         //succes de la requete
-         success : function(code_html){
-            alert("Success");
-            $("textarea#change").empty();
-            var test = code_html.split(";");
-            $.each(test, function() {
-          $("textarea#change").append(this+"\n");
-        });
-            
-          },
-         //echec de la requete
-         error : function(resultat, statut, erreur){
-          alert("Error");
-        },
-         //une fois que tout est finis
-         complete : function(resultat, statut){
-          alert("Complete");
-        }
-
-        });
-    }
-    //Chaque lettre tapée
-    $("input").keypress(function(){
-      //lancer requete
-      ajax();
-    });
-});
       $(document).ready(function() {
+      var data = {}; 
+      $("#browsers option").each(function(i,el) {  
+         data[$(el).data("value")] = $(el).val();
+      });
+      // `data` : object of `data-value` : `value`
+      console.log(data, $("#browsers option").val());
 
-var data = {}; 
-$("#browsers option").each(function(i,el) {  
-   data[$(el).data("value")] = $(el).val();
+
+    document.querySelector('input[list]').addEventListener('input', function(e) {
+    var input = e.target,
+        list = input.getAttribute('list'),
+        options = document.querySelectorAll('#' + list + ' option'),
+        hiddenInput = document.getElementById(input.id + '-hidden'),
+        inputValue = input.value;
+
+    hiddenInput.value = inputValue;
+
+    for(var i = 0; i < options.length; i++) {
+        var option = options[i];
+
+        if(option.innerText === inputValue) {
+            hiddenInput.value = option.getAttribute('data-value');
+            break;
+        }
+    }
 });
-// `data` : object of `data-value` : `value`
-console.log(data, $("#browsers option").val());
-
-
-    $('#submit').click(function()
-    {
-        var value = $('#selected').val();
-        alert($('#browsers [value="' + value + '"]').data('value'));
-    });
 });
     </script>
   </head>
@@ -141,15 +117,19 @@ console.log(data, $("#browsers option").val());
                 <nav class="collapse navbar-collapse" role="navigation">
                   <form class="navbar-form navbar-left" method="GET" action="./other.jsp">
                     <div class="input-group input-group-sm" style="max-width:360px;">
-                      <input list="name" type="text" class="form-control" placeholder="Rechercher un ami" name="friendToDisplayProfilId">
+                      <!-- Hidden -->
                       <input type="hidden" value="true" name="friendToDisplayProfil">
-                      <datalist id="name" name="friendToDisplayProfilId">
+                      <input type="hidden" name="friendToDisplayProfilId" id="answerInput-hidden">
+                      <!-- Id recupere -->
+                      <input list="suggestionList" type="text" class="form-control" placeholder="Rechercher un ami" name="friendToDisplayProfilId" id="answerInput">
+                      <!-- New form -->
+                      <datalist id="suggestionList" name="friendToDisplayProfilId">
                         <%  
                           Model model = new Model();
                           model.initialize();
                           for(User friend : model.getAllUsers()){ %>
                           <!-- value = affichage datavalue = donnée -->
-                            <option value="<%=friend.getFirstName()%>" data-value="<%= friend.getId() %>"> 
+                            <option data-value="<%= friend.getId() %>"><%= friend.getFirstName() %></option>
                         <%}
                         %>
                       </datalist>
@@ -159,7 +139,7 @@ console.log(data, $("#browsers option").val());
                         </button>
                       </div>
                     </div>
-                  </form>
+                  </form>          
                 </nav>
               </div>
               <!-- /top nav -->

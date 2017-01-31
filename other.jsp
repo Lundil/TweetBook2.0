@@ -35,7 +35,7 @@
     User other = null;
     int countOtherFriend = 0;
     Model model = new Model();
-
+    
     //récupère les infos de l'utilisateur pour afficher son profil
     if(request.getParameter("friendToDisplayProfil") != null){
       if(request.getParameter("friendToDisplayProfil").equals("true")){
