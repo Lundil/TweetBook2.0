@@ -109,6 +109,7 @@
                       <div class="panel panel-default">
                         <div class="panel-heading"><h4><%= publication.getTitle() %></h4></div>
                         <div class="panel-body">
+                          <p><%= publication.getFirstName() %> <%= publication.getLastName() %></p>
                           (Requete image, nom, date de l'auteur du post)
                           <hr>
                           <p><%= publication.getContent() %></p>
