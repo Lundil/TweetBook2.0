@@ -107,6 +107,35 @@ public class Model{
 		}
 	}
 
+	/** récupère les informations sur tous les utilisateurs
+	* @return ArrayList<User> */
+	public ArrayList<User> getAllUsers(){
+		ArrayList<User> users = new ArrayList<User>();
+		try{
+			statement = connection.prepareStatement("select IDUser, lastName, firstName, email, phoneNumber, birthDay, birthPlace, address, login, profilPhoto from users");
+			result = statement.executeQuery();
+
+			while(result.next()){
+				users.add(new User(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+								result.getString(5), result.getString(6), result.getString(7), result.getString(8),
+								result.getString(9), result.getString(10)));
+			}
+
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally{
+			try{
+				result.close();
+				statement.close();
+				connection.close();
+				return users;
+			} catch(Exception e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+
 	/** récupère les informations sur l'utilisateur à partir de son ID
 	* @param id : String
 	* @return User */
