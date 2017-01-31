@@ -146,9 +146,9 @@
               <div class="col-sm-5">
                 <div class="panel panel-default">
                   <div class="panel-body">
-                  <% for(User user : user.getFriends()){ %>
-                  <% } %>
-                  <p class="lead">(Requete tout amis)</p>
+                  <%for(User friend : user.getFriends()){ %>
+                      <p class="lead"><%= friend.getFirstName()%> <%= friend.getLastName() %></p>
+                  <%} %>
                   </div>
                 </div>
               </div>
