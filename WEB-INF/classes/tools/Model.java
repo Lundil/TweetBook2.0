@@ -86,7 +86,7 @@ public class Model{
 		int i = 0;
 		ArrayList<String> photos = new ArrayList<String>();
 		try{
-			statement = connection.prepareStatement("select profilPhoto from users where IDUser in (select IDUser2 from friendWith where IDUser1 = ?) group by LastName order by LastName asc");
+			statement = connection.prepareStatement("select profilPhoto from users where IDUser in (select IDUser2 from friendWith where IDUser1 = ?) group by LastName, profilPhoto order by LastName asc");
 			statement.setInt(1,user.getId());
 			result = statement.executeQuery();
 			while(result.next() && i <5)
@@ -232,19 +232,18 @@ public class Model{
 		}
 	}
 
-
 	/** récupère les publications d'un utilisateur à partir de son ID
 	* @param id : String
 	* @return ArrayList<Publication> */
-	public ArrayList<Publication> getFriendsPublication(User user){
+	public ArrayList<Publication> getPublication(User user){
 		ArrayList<Publication> publications = new ArrayList<Publication>();
 		try{
-			statement = connection.prepareStatement("select p.titlePublication, p.content, p.date u.firstName, u.lastName from publications inner join users u on p.IDUser =  u.IDUser where p.IDUser in (select f.IDUser1 from friendWith f where f.IDUser2 = ?)");
+			statement = connection.prepareStatement("select p.titlePublication, p.content, p.date, u.lastName, u.firstName from publications p inner join users u on u.IDUser = p.IDAuthor where IDAuthor = ? group by p.date, p.titlePublication, p.content, u.lastName, u.firstName  order by date");
 			statement.setInt(1,user.getId());
 			result = statement.executeQuery();
 			Publication publication;
 			while(result.next()){
-				publication = new Publication(result.getString(1), result.getString(2), result.getString(3),  result.getInt(4));
+				publication = new Publication(result.getString(1), result.getString(2), result.getString(3), user.getId(), result.getString(4), result.getString(5));
 				publications.add(publication);
 			}
 
@@ -263,13 +262,13 @@ public class Model{
 		}
 	}
 
-	/** récupère les publications d'un utilisateur à partir de son ID
+		/** récupère les publications d'un utilisateur à partir de son ID
 	* @param id : String
 	* @return ArrayList<Publication> */
-	public ArrayList<Publication> getPublication(User user){
+	public ArrayList<Publication> getFriendsPublication(User user){
 		ArrayList<Publication> publications = new ArrayList<Publication>();
 		try{
-			statement = connection.prepareStatement("select p.titlePublication, p.content, p.date, u.lastName, u.firstName from publications p inner join users u on u.IDUser = p.IDAuthor where IDAuthor = ?");
+			statement = connection.prepareStatement("select p.titlePublication, p.content, p.date, u.lastName, u.firstName from publications p inner join users u on u.IDUser = p.IDAuthor where IDAuthor in (select IDUser2 from friendWith where IDUser1 = ?) group by p.date,p.titlePublication, p.content, u.lastName, u.firstName order by date");
 			statement.setInt(1,user.getId());
 			result = statement.executeQuery();
 			Publication publication;
