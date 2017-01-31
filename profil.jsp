@@ -138,7 +138,11 @@
                   </div>
                   <div class="panel-body">
                     <ul class="list-unstyled">
-                    <% model.initialize();
+                    <%for(User friend : user.getFriends()){ %>
+                        <p class="lead"><%= friend.getFirstName()%> <%= friend.getLastName() %></p>
+                    <%} %>
+                    <% 
+                    model.initialize();
                     for(String photo : model.getProfilPhotoOf5Friend(user)) { %>
                         <li>
                           <img src="<%= photo%>" width="28px" height="28px">
@@ -197,7 +201,7 @@
                     <form>
                       <div class="input-group">
                         <div class="input-group-btn">
-                          <button class="btn btn-default">+1</button><button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
+                          <button class="btn btn-default">+1</button></i></button>
                         </div>
                         <input type="text" class="form-control" placeholder="Commenter..">
                       </div>

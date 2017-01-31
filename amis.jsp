@@ -127,12 +127,12 @@
                     <div class="input-group input-group-sm" style="max-width:360px;">
                       <input list="amiRecherche" type="text" class="form-control" placeholder="Rechercher un ami" name="rechercheAmi" id="">
                       <datalist id="amiRecherche">
-                        <% Model model = new Model();
-                        model.initialize();
-                        for(User friend : model.getAllUsers()){ %>
+                        <%  Model model = new Model();
+                            model.initialize();for(User friend : model.getAllUsers()){ %>
                             <option value="<%= friend.getLastName() %>">
                             <input type="hidden" value="<%= friend.getId() %>" name="idPersonne"></input>
-                        <%} %>
+                        <%}
+                        %>
                       </datalist>
                       <div class="input-group-btn">
                         <button class="btn btn-default" type="submit">
