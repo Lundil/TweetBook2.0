@@ -129,37 +129,26 @@
                   </div>
                   <div class="panel-body">
                     <p class="lead"><%= user.getFirstName() %>  <%= user.getLastName() %></p>
-                    <p><%= countFriend %> amis</p>
-                    <p>
-                      (Requete image des 5 premiers amis)<br>
-                      <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-                      <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-                      <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-                      <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-                      <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-                    </p>
                   </div>
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <a href="amis.jsp" class="pull-right">En voir +</a> <h4>Ajouter des amis</h4>
+                    <h4>Vos amis (<%= countFriend %>)</h4>
                   </div>
                   <div class="panel-body">
                     (Requete image des 5 premiers amis de la base de donnee)
                     <ul class="list-unstyled">
-                      <li>
-                        <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-                        <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-                        <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-                        <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-                        <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-                      </li>
+                    <% model.initialize();
+                    for(String photo : model.getProfilPhotoOf5Friend(user)) { %>
+                        <li>
+                          <img src="<%= photo%>" width="28px" height="28px">
+                        </li>
+                      <%}%>
                     </ul>
                   </div>
                 </div>
                 <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <a href="infos.jsp" class="pull-right">Modifier</a> <h4>A propos</h4>
+                  <div class="panel-heading"><h4>A propos</h4>
                   </div>
                   <div class="panel-body">
                   <%= user.getFirstName() %> <%= user.getLastName() %><br>
@@ -175,10 +164,11 @@
               <!-- main col right -->
               <div class="col-sm-7">
                 <div class="well"> 
+
                   <form class="form-horizontal" role="form">
                     <h4>Quoi de neuf <%= user.getFirstName() %> ?</h4>
                     <div class="form-group" style="padding:14px;">
-                      <textarea class="form-control" placeholder="Update your status"></textarea>
+                      <textarea class="form-control" placeholder="Publier un message"></textarea>
                     </div>
                     <button class="btn btn-primary pull-right" type="button">Post</button>
                       <ul class="list-inline">
@@ -187,6 +177,7 @@
                         <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
                       </ul>
                   </form>
+
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading"><h4>Post numero 1</h4></div>
@@ -208,6 +199,7 @@
                     </form>
                   </div>
                 </div>
+
               </div>
               </div><!--/row-->
               <h4 class="text-center">

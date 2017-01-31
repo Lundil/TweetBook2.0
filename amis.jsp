@@ -145,6 +145,9 @@
               <!-- main col left --> 
               <div class="col-sm-5">
                 <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Vos amis</h4>
+                  </div>
                   <div class="panel-body">
                   <%for(User friend : user.getFriends()){ %>
                       <p class="lead"><%= friend.getFirstName()%> <%= friend.getLastName() %></p>
