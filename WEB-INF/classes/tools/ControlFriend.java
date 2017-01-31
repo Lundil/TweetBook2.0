@@ -25,29 +25,31 @@ public class ControlFriend extends HttpServlet{
 				if(request.getParameter("removeFriend") != null){
 					model.removeFriend(
 					Integer.parseInt(request.getParameter("removeFriendId")), user);
+					model.initialize();
 					user.setFriends(model.getFriend(user));
-					response.sendRedirect("friends.jsp");
+					response.sendRedirect("../amis.jsp");
 				}
 
 				//récupère les infos de l'utilisateur pour afficher son profil
 				else if(request.getParameter("friendToDisplayProfil") != null){
-					User friend = model.getFriend(Integer.parseInt(request.getParameter(request.getParameter("friendToDisplayProfilId"))));
+					User friend = model.getFriend(Integer.valueOf(request.getParameter(request.getParameter("friendToDisplayProfilId"))));
 					session.setAttribute(("friendToDisplay"), friend);
 					response.sendRedirect("friendProfil.jsp");
 				}
 
 				//ajoute un ami
 				else if(request.getParameter("addFriend") != null){
-					model.addFriend(Integer.parseInt(request.getParameter(request.getParameter("addFriendId"))), user);
+					model.addFriend(Integer.valueOf(request.getParameter("addFriendId")), user);
+					model.initialize();
 					user.setFriends(model.getFriend(user));
-					response.sendRedirect("potentialFriends.jsp");
+					response.sendRedirect("../amis.jsp");
 				}
 
 				//récupère la liste des amis potentiels
 				else if(request.getParameter("getPotentialFriends").equals("true")){
 					ArrayList<User> potentialFriends = model.getPotientialFriend(user);
 					session.setAttribute(("potentialFriends"), potentialFriends);
-					response.sendRedirect("potentialFriends.jsp");
+					response.sendRedirect("../amis.jsp");
 				}
 
 				//ServletContext servletContext = getServletContext();
