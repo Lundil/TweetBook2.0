@@ -142,7 +142,7 @@
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <a href="friend.jsp" class="pull-right">En voir +</a> <h4>Ajouter des amis</h4>
+                    <a href="amis.jsp" class="pull-right">En voir +</a> <h4>Ajouter des amis</h4>
                   </div>
                   <div class="panel-body">
                     (Requete image des 5 premiers amis de la base de donnee)
