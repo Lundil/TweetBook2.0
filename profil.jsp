@@ -26,6 +26,17 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link rel="icon" href="http://moodle.univ-lille1.fr/theme/image.php/ulille/theme/1484841149/favicon" />
+    <script>
+      $(document).ready(function() {
+         $('.hover').mousemove(function(e){
+            var hovertext = $(this).attr('hinttext');
+               $('#hintbox').text(hovertext).show();
+         $('#hintbox').css('top',e.clientY-15).css('left',e.clientX+30);})
+         .mouseout(function(){
+            $('#hintbox').hide();
+         });
+      });
+   </script>
   </head>
   <body>
 
@@ -136,19 +147,14 @@
                   <div class="panel-heading">
                     <h4>Vos amis (<%= countFriend %>)</h4>
                   </div>
+                  <div id="hintbox"></div>
                   <div class="panel-body">
-                    <ul class="list-unstyled">
-                    <%for(User friend : user.getFriends()){ %>
-                        <p class="lead"><%= friend.getFirstName()%> <%= friend.getLastName() %></p>
+                    <% model.initialize();
+                        for(String photo : model.getProfilPhotoOf5Friend(user)){ %>
+                          <a href="./profil.jsp">
+                          <img src="<%= photo%>" width="32px" height="32px">
+                        </a>
                     <%} %>
-                    <% 
-                    model.initialize();
-                    for(String photo : model.getProfilPhotoOf5Friend(user)) { %>
-                        <li>
-                          <img src="<%= photo%>" width="28px" height="28px">
-                        </li>
-                      <%}%>
-                    </ul>
                   </div>
                 </div>
                 <div class="panel panel-default">
