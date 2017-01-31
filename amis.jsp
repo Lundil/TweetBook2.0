@@ -65,6 +65,22 @@
       ajax();
     });
 });
+      $(document).ready(function() {
+
+var data = {}; 
+$("#browsers option").each(function(i,el) {  
+   data[$(el).data("value")] = $(el).val();
+});
+// `data` : object of `data-value` : `value`
+console.log(data, $("#browsers option").val());
+
+
+    $('#submit').click(function()
+    {
+        var value = $('#selected').val();
+        alert($('#browsers [value="' + value + '"]').data('value'));
+    });
+});
     </script>
   </head>
   <body>
@@ -123,14 +139,16 @@
                   <a href="./profil.jsp" class="navbar-brand logo">t</a>
                 </div>
                 <nav class="collapse navbar-collapse" role="navigation">
-                  <form class="navbar-form navbar-left" method="GET" action="./other.jsp">
+                  <form class="navbar-form navbar-left" method="GET" action="./tools/ControlFriend">
                     <div class="input-group input-group-sm" style="max-width:360px;">
-                      <input list="amiRecherche" type="text" class="form-control" placeholder="Rechercher un ami" name="rechercheAmi" id="">
+                      <input list="amiRecherche" type="text" class="form-control" placeholder="Rechercher un ami" name="friendToDisplayProfilId">
+                      <input type="hidden" value="true" name="friendToDisplayProfilId">
                       <datalist id="amiRecherche">
                         <%  
                           Model model = new Model();
                           model.initialize();
                           for(User friend : model.getAllUsers()){ %>
+                          <!-- value = affichage datavalue = donnée -->
                             <option value="<%=friend.getFirstName()%>" data-value="<%= friend.getId() %>"> 
                         <%}
                         %>
@@ -159,7 +177,7 @@
                   </div>
                   <div class="panel-body">
                   <%for(User friend : user.getFriends()){ %>
-                      <p class="lead"><%= friend.getFirstName()%> </p>
+                      <p class="lead"><%= friend.getFirstName()%> <%= friend.getLastName() %></p>
                   <%} %>
                   </div>
                 </div>
