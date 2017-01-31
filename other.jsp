@@ -30,6 +30,7 @@
   <body>
     
   <jsp:useBean id="user" type="tools.User" scope="session" />
+  
   <%
 
     User other = null;
@@ -41,15 +42,17 @@
       if(request.getParameter("friendToDisplayProfil").equals("true")){
         model.initialize();
         other = model.getFriend(Integer.valueOf(request.getParameter("friendToDisplayProfilId")));
-        if(other != null){
-          //ajout des publications et des amis au profil
-          model.initialize();
-          other.setPublications(model.getPublication(other));
-          model.initialize();
-          other.setFriends(model.getFriend(other));
-          model.initialize();
-          countOtherFriend = model.getNumberOfFriend(other);
-    %>
+      }
+    }
+    if(other != null){
+      //ajout des publications et des amis au profil
+      model.initialize();
+      other.setPublications(model.getPublication(other));
+      model.initialize();
+      other.setFriends(model.getFriend(other));
+      model.initialize();
+      countOtherFriend = model.getNumberOfFriend(other);
+      } %>
 
       <div class="wrapper">
         <div class="box">
@@ -69,7 +72,7 @@
               <a href="profil.jsp"><i class="glyphicon glyphicon-list-alt"></i> Mur</a>
             </li>
             <li>
-              <a href="fil.jsp"><i class="glyphicon glyphicon-list-alt"></i> Fil d'actualités</a>
+              <a href="fil.jsp"><i class="glyphicon glyphicon-list-alt"></i> Fil d actualités</a>
             </li>
             <li>
               <a href="admin.jsp"><i class="glyphicon glyphicon-list-alt"></i> Administration</a>
@@ -165,29 +168,20 @@
 
               <!-- main col right -->
               <div class="col-sm-7">
+                <% for(Publication publication : other.getPublications()) { %>
                 <div class="panel panel-default">
-                  <div class="panel-heading"><h4>Post numero 1</h4></div>
+                  <div class="panel-heading"><h4><%= publication.getTitle() %></h4></div>
                   <div class="panel-body">
-                    (Requete image, nom, date de l'auteur du post)
+                    <p>publié le <%= publication.getDate() %></p>
                     <hr>
-                    <p>(Requete commentaire du post)</p>
-                    (Requete image du post si existe)
-                    <img src="//placehold.it/150x150">
+                    <p><%= publication.getContent() %></p>
                     <div class="clearfix"></div>
                     <hr>
-                    <form>
-                      <div class="input-group">
-                        <div class="input-group-btn">
-                          <button class="btn btn-default">+1</button><button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Commenter..">
-                      </div>
-                    </form>
                   </div>
                 </div>
-
-              </div>
+                <% } %>
               </div><!--/row-->
+
               <h4 class="text-center">
               <a href="https://da2i.univ-lille1.fr/" target="ext">TweetBook DA2I 2016-2017</a>
               </h4>
@@ -235,7 +229,6 @@
       </div>
     </div>
 
-    <% } } } %>
     <!-- script references -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
