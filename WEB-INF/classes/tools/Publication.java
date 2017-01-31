@@ -4,9 +4,17 @@ import java.util.ArrayList;
 public class Publication{
 
 	//informations sur la publication;
-	private String title, content, date;
+	private String title, content, date, lastNameAuthor, firstNameAuthor;
 	private int author;
 
+	public Publication(String title, String content, String date, int author, String lastNameAuthor, String firstNameAuthor){
+		this.title = title;
+		this.content = content;
+		this.date = date;
+		this.lastNameAuthor = lastNameAuthor;
+		this.firstNameAuthor = firstNameAuthor;
+		this.author = author;
+	}
 	public Publication(String title, String content, String date, int author){
 		this.title = title;
 		this.content = content;
@@ -33,5 +41,11 @@ public class Publication{
 	}
 	public int getAuthor(){
 		return this.author;
+	}
+	public String getLastNameAuthor(){
+		return this.lastNameAuthor;
+	}
+	public String getFirstNameAuthor(){
+		return this.firstNameAuthor;
 	}
 }
