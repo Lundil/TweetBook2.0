@@ -103,23 +103,23 @@
 
               <!-- main col right -->
               <div class="col-sm-7">
-                <%Class.forName("org.postgresql.Driver");
-                    Connection con = DriverManager.getConnection("jdbc:postgresql://psqlserv/da2i","lamarqux", "moi");
-                    Statement stmt= con.createStatement();
-                    String query = "SELECT nom FROM personne ";
-                    ResultSet rs = stmt.executeQuery(query);
-                    while(rs.next()){%>
+                <% for(Publication publication : user.getFriendsPublication()){ %>
+
                     <div class="well">
-                          <div class='panel-heading'><h4>" <% out.print(rs.getString("nom"));%> "</h4></div>
-                          <div class='panel-body'>
-                            <hr>
-                            <p>(Requete commentaire du post)</p>
-                            <div class='clearfix'></div>
-                            <hr>
-                          </div>
+                      <div class="panel panel-default">
+                        <div class="panel-heading"><h4><%= publication.getTitle() %></h4></div>
+                        <div class="panel-body">
+                          (Requete image, nom, date de l'auteur du post)
+                          <hr>
+                          <p><%= publication.getContent() %></p>
+                          (Requete image du post si existe)
+                          <div class="clearfix"></div>
+                          <hr>
+                        </div>
+                      </div>
                     </div>
-                        <%}
-                  con.close(); %>
+
+                  <% } %>
                   <h4 class="text-center">
               <a href="https://da2i.univ-lille1.fr/" target="ext">TweetBook DA2I 2016-2017</a>
               </h4>

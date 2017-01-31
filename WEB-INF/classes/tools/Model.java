@@ -86,7 +86,7 @@ public class Model{
 		int i = 0;
 		ArrayList<String> photos = new ArrayList<String>();
 		try{
-			statement = connection.prepareStatement("select profilPhoto from users where IDUser in (select IDUser2 from friendsWith where IDUser1 = ?) group by LastName order by LastName asc");
+			statement = connection.prepareStatement("select profilPhoto from users where IDUser in (select IDUser2 from friendWith where IDUser1 = ?) group by LastName order by LastName asc");
 			statement.setInt(1,user.getId());
 			result = statement.executeQuery();
 			while(result.next() && i <5)
@@ -269,12 +269,12 @@ public class Model{
 	public ArrayList<Publication> getPublication(User user){
 		ArrayList<Publication> publications = new ArrayList<Publication>();
 		try{
-			statement = connection.prepareStatement("select titlePublication, content, date from publications where IDAuthor = ?");
+			statement = connection.prepareStatement("select p.titlePublication, p.content, p.date, u.lastName, u.firstName from publications p inner join users u on u.IDUser = p.IDAuthor where IDAuthor = ?");
 			statement.setInt(1,user.getId());
 			result = statement.executeQuery();
 			Publication publication;
 			while(result.next()){
-				publication = new Publication(result.getString(1), result.getString(2), result.getString(3), user.getId());
+				publication = new Publication(result.getString(1), result.getString(2), result.getString(3), user.getId(), result.getString(4), result.getString(5));
 				publications.add(publication);
 			}
 
