@@ -23,32 +23,24 @@ public class ControlPublication extends HttpServlet{
 
 				//créé une publication
 				if(request.getParameter("newPublication") != null){
-					model.createPublication(
-					(String) request.getParameter("titleNewPublication"), 
-					(String) request.getParameter("contentNewPublication"), user.getId());
-					model.initialize();
-					user.setPublications(model.getPublication(user));
-					response.sendRedirect("../profil.jsp");
-				}
-
-				//supprime une publication
-				else if(request.getParameter("deletePublication").equals("true")){
-					model.deletePublication(Integer.parseInt(request.getParameter(request.getParameter("IDDeletePublication"))), user.getId());
-					model.initialize();
-					user.setPublications(model.getPublication(user));
-					response.sendRedirect("../profil.jsp");
+					if(request.getParameter("newPublication").equals("true")){
+						model.createPublication(
+						(String) request.getParameter("titleNewPublication"), 
+						(String) request.getParameter("contentNewPublication"), user.getId());
+						model.initialize();
+						user.setPublications(model.getPublication(user));
+						response.sendRedirect("../profil.jsp");
+					}
 				}
 
 				//récupère les publications de ses amis
-				else if(request.getParameter("getFriendsPublication").equals("true")){
-					ArrayList<Publication> friendsPublication = model.getFriendsPublication(user);
-					session. setAttribute("friendsPublication", friendsPublication);
-					response.sendRedirect("../actu.jsp");
+				else if(request.getParameter("getFriendsPublication") != null){
+					if(request.getParameter("getFriendsPublication").equals("true")){
+						ArrayList<Publication> friendsPublication = model.getFriendsPublication(user);
+						session. setAttribute("friendsPublication", friendsPublication);
+						response.sendRedirect("../actu.jsp");
+					}
 				}
-
-				//ServletContext servletContext = getServletContext();
-				//RequestDispatcher dispatcher = servletContext.getRequestDispatcher("/index.html");
-				//dispatcher.forward(request, response);
 			}
 		} catch (Exception e){
 			e.printStackTrace();
