@@ -10,7 +10,6 @@
     <%@ page import="java.sql.ResultSet" %>
     <%@ page import="java.sql.ResultSetMetaData" %>
     <%@ page session="true" %>
-    <%@ page errorPage="erreur.jsp" %>
     <%@ page contentType="text/html; charset=UTF-8" %>
     <!--   import de servlet   -->
     <%@ page import="java.io.*" %>
@@ -27,47 +26,30 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link rel="icon" href="http://moodle.univ-lille1.fr/theme/image.php/ulille/theme/1484841149/favicon" />
-    <script>
-      $(document).ready(function(){
-  alert("Coucou");
-  function ajax(){ 
-      $.ajax({
-         url : 'http://localhost:8080/jquery/servlet/AppelAjaxPersonne',
-         type : 'GET',
-         dataType : 'text',
-         data: {
-              deb: $("#deb").val()
-          },
-         //succes de la requete
-         success : function(code_html){
-            alert("Success");
-            $("textarea#change").empty();
-            var test = code_html.split(";");
-            $.each(test, function() {
-          $("textarea#change").append(this+"\n");
-        });
-            
-          },
-         //echec de la requete
-         error : function(resultat, statut, erreur){
-          alert("Error");
-        },
-         //une fois que tout est finis
-         complete : function(resultat, statut){
-          alert("Complete");
-        }
-
-        });
-    }
-    //Chaque lettre tapée
-    $("input").keypress(function(){
-      //lancer requete
-      ajax();
-    });
-});
-    </script>
   </head>
   <body>
+<%  Model model = new Model();
+    model.initialize();
+    String idPerso = request.getParameter("idPersonne");
+    User user2 = model.getUserByLogin(request.getUserPrincipal().getName()); %>
+  <%
+    
+    model.initialize();
+    User user1 = model.getUserByLogin(request.getUserPrincipal().getName());
+
+    //ajout des publications et des amis au profil
+    model.initialize();
+    user1.setPublications(model.getPublication(user1));
+    model.initialize();
+    user1.setFriends(model.getFriend(user1));
+    model.initialize();
+    int countFriend = model.getNumberOfFriend(user1);
+
+    //création de la session
+    session = request.getSession(true);
+    session.setAttribute("user", user1);
+
+  %>
   <jsp:useBean id="user" type="tools.User" scope="session" />
       <div class="wrapper">
         <div class="box">
@@ -123,18 +105,9 @@
                   <a href="./profil.jsp" class="navbar-brand logo">t</a>
                 </div>
                 <nav class="collapse navbar-collapse" role="navigation">
-                  <form class="navbar-form navbar-left" method="GET" action="./other.jsp">
+                  <form class="navbar-form navbar-left">
                     <div class="input-group input-group-sm" style="max-width:360px;">
-                      <input list="amiRecherche" type="text" class="form-control" placeholder="Rechercher un ami" name="rechercheAmi" id="">
-                      <datalist id="amiRecherche">
-                        <%  
-                          Model model = new Model();
-                          model.initialize();
-                          for(User friend : model.getAllUsers()){ %>
-                            <option value="<%=friend.getFirstName()%>" data-value="<%= friend.getId() %>"> 
-                        <%}
-                        %>
-                      </datalist>
+                      <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
                       <div class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                           <i class="glyphicon glyphicon-search"></i>
@@ -152,41 +125,68 @@
               <!-- content -->                      
               <div class="row">
               <!-- main col left --> 
-              <div class="col-sm-6">
+              <div class="col-sm-5">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                    <h4>Vos amis</h4>
+                  <div class="panel-thumbnail">
+                    <img src=<%= user.getProfilPhoto() %> class="img-responsive">
                   </div>
                   <div class="panel-body">
-                  <%for(User friend : user.getFriends()){ %>
-                      <p class="lead"><%= friend.getFirstName()%> </p>
-                  <%} %>
+                    <p class="lead"><%= user.getFirstName() %>  <%= user.getLastName() %></p>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4>Vos amis (<%= countFriend %>)</h4>
+                  </div>
+                  <div class="panel-body">
+                    (Requete image des 5 premiers amis de la base de donnee)
+                    <ul class="list-unstyled">
+                    <% model.initialize();
+                    for(String photo : model.getProfilPhotoOf5Friend(user)) { %>
+                        <li>
+                          <img src="<%= photo%>" width="28px" height="28px">
+                        </li>
+                      <%}%>
+                    </ul>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading"><h4>A propos</h4>
+                  </div>
+                  <div class="panel-body">
+                  <%= user.getFirstName() %> <%= user.getLastName() %><br>
+                  <%= user.getDate() %><br>
+                  <%= user.getPlace() %><br>
+                  <%= user.getMail() %><br>
+                  <%= user.getAddress() %><br>
+                  <%= user.getPhoneNumber() %><br>
                   </div>
                 </div>
               </div>
-              <!-- main col right --> 
-              <div class="col-sm-6">
+
+              <!-- main col right -->
+              <div class="col-sm-7">
                 <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Ajouter amis</h4>
-                  </div>
+                  <div class="panel-heading"><h4>Post numero 1</h4></div>
                   <div class="panel-body">
-                  <p class="lead">
-                  <%
-                  model.initialize();
-                  for(User friend : model.getAllUsers()){
-                    if(friend.getId() != user.getId() && !user.containsFriend(friend.getId())){
-                  %>
-                    <form class="navbar-form navbar-left" method="GET" action="./tools/ControlFriend">
-                      <input class="btn btn-primary pull-right" type="submit" value="<%= friend.getFirstName() %> <%= friend.getLastName() %>"></input>
-                      <input type="hidden" value="<%= friend.getId() %>" name="addFriendId"></input>
-                      <input type="hidden" value="true" name="addFriend"></input>
+                    (Requete image, nom, date de l'auteur du post)
+                    <hr>
+                    <p>(Requete commentaire du post)</p>
+                    (Requete image du post si existe)
+                    <img src="//placehold.it/150x150">
+                    <div class="clearfix"></div>
+                    <hr>
+                    <form>
+                      <div class="input-group">
+                        <div class="input-group-btn">
+                          <button class="btn btn-default">+1</button><button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Commenter..">
+                      </div>
                     </form>
-                    
-                  <% } } %>
-                  </p>
                   </div>
                 </div>
+
               </div>
               </div><!--/row-->
               <h4 class="text-center">
