@@ -165,12 +165,17 @@
               <div class="col-sm-7">
                 <div class="well"> 
 
-                  <form class="form-horizontal" role="form">
+                  <form class="form-horizontal" role="form" action="tools/ControlPublication" method="POST">
                     <h4>Quoi de neuf <%= user.getFirstName() %> ?</h4>
                     <div class="form-group" style="padding:14px;">
-                      <textarea class="form-control" placeholder="Publier un message"></textarea>
+                      <div class⁼"panel-heading">
+                      <textarea class="form-control" name="titleNewPublication" placeholder="Titre du message"></textarea>
                     </div>
-                    <button class="btn btn-primary pull-right" type="button">Post</button>
+                    <div class="form-group" style="padding:14px;">
+                      <textarea class="form-control" name="contentNewPublication" placeholder="Publier un message"></textarea>
+                    </div>
+                    <input type="hidden" name="newPublication" value="true">
+                    <button class="btn btn-primary pull-right" type="submit">Post</button>
                       <ul class="list-inline">
                         <li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
                         <li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
@@ -179,14 +184,14 @@
                   </form>
 
                 </div>
+                <% model.initialize(); %>
+                <% for(Publication publication : user.getPublications()) { %>
                 <div class="panel panel-default">
-                  <div class="panel-heading"><h4>Post numero 1</h4></div>
+                  <div class="panel-heading"><h4><%= publication.getTitle() %></h4></div>
                   <div class="panel-body">
-                    (Requete image, nom, date de l'auteur du post)
+                    <p>publié le <%= publication.getDate() %></p>
                     <hr>
-                    <p>(Requete commentaire du post)</p>
-                    (Requete image du post si existe)
-                    <img src="//placehold.it/150x150">
+                    <p><%= publication.getContent() %></p>
                     <div class="clearfix"></div>
                     <hr>
                     <form>
@@ -199,6 +204,7 @@
                     </form>
                   </div>
                 </div>
+                <% } %>
 
               </div>
               </div><!--/row-->
