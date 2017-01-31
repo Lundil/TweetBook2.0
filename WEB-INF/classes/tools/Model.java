@@ -52,6 +52,33 @@ public class Model{
 		}
 	}
 
+	/** récupère l'ID d'un utilisateur pour confirmer sa connexion
+	* @param login : String
+	* @param password : String
+	* @return String */
+	public int getNumberOfFriend(User user){
+		int count = -1;
+		try{
+			statement = connection.prepareStatement("select count(*) from friendWith where IDUser1 = ?");
+			statement.setInt(1,user.getId());
+			result = statement.executeQuery();
+			result.next();
+			count = result.getInt(1);
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally{
+			try{
+				result.close();
+				statement.close();
+				connection.close();
+				return count;
+			} catch(Exception e){
+				e.printStackTrace();
+				return -1;
+			}
+		}
+	}
+
 	/** récupère les informations sur l'utilisateur à partir de son ID
 	* @param id : String
 	* @return User */
