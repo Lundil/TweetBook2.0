@@ -31,7 +31,7 @@
     
   <jsp:useBean id="user" type="tools.User" scope="session" />
   <%
-    User other = (User) session.getAttribute("other"); 
+    User other = (User) request.getParameter("other"); 
     //ajout des publications et des amis au profil
     model.initialize();
     other.setPublications(model.getPublication(other));

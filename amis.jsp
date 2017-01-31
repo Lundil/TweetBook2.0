@@ -141,9 +141,9 @@ console.log(data, $("#browsers option").val());
                 <nav class="collapse navbar-collapse" role="navigation">
                   <form class="navbar-form navbar-left" method="GET" action="./tools/ControlFriend">
                     <div class="input-group input-group-sm" style="max-width:360px;">
-                      <input list="amiRecherche" type="text" class="form-control" placeholder="Rechercher un ami" name="friendToDisplayProfilId">
-                      <input type="hidden" value="true" name="friendToDisplayProfilId">
-                      <datalist id="amiRecherche">
+                      <input list="name" type="text" class="form-control" placeholder="Rechercher un ami" name="friendToDisplayProfilId">
+                      <input type="hidden" value="true" name="friendToDisplayProfil">
+                      <datalist id="name" name="friendToDisplayProfilId">
                         <%  
                           Model model = new Model();
                           model.initialize();
