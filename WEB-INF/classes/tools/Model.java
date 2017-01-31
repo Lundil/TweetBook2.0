@@ -498,7 +498,7 @@ public class Model{
 	public void createPublication(String title, String content, int author){
 		try{
 			//création publication
-			statement = connection.prepareStatement("insert into publications(titlePublication, content, date, IDAuthor) values(?,?,now,?)");
+			statement = connection.prepareStatement("insert into publications(titlePublication, content, IDAuthor) values(?,?,?)");
 			statement.setString(1,title);
 			statement.setString(2,content);
 			statement.setInt(3, author);
