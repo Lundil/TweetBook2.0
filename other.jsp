@@ -33,25 +33,22 @@
   <%
 
     User other = null;
+    int countOtherFriend = 0;
     Model model = new Model();
 
     //récupère les infos de l'utilisateur pour afficher son profil
     if(request.getParameter("friendToDisplayProfil") != null){
       if(request.getParameter("friendToDisplayProfil").equals("true")){
         model.initialize();
-        other = model.getFriend(Integer.valueOf(request.getParameter(request.getParameter("friendToDisplayProfilId"))));
-      }
-    }
-    if(other != null){
-      //ajout des publications et des amis au profil
-      model.initialize();
-      other.setPublications(model.getPublication(other));
-      model.initialize();
-      other.setFriends(model.getFriend(other));
-      model.initialize();
-      int countOtherFriend = model.getNumberOfFriend(other);
-    }
-
+        other = model.getFriend(Integer.valueOf(request.getParameter("friendToDisplayProfilId")));
+        if(other != null){
+          //ajout des publications et des amis au profil
+          model.initialize();
+          other.setPublications(model.getPublication(other));
+          model.initialize();
+          other.setFriends(model.getFriend(other));
+          model.initialize();
+          countOtherFriend = model.getNumberOfFriend(other);
     %>
 
       <div class="wrapper">
@@ -237,6 +234,8 @@
         </div>
       </div>
     </div>
+
+    <% } } } %>
     <!-- script references -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

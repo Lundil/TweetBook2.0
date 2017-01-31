@@ -139,7 +139,7 @@ console.log(data, $("#browsers option").val());
                   <a href="./profil.jsp" class="navbar-brand logo">t</a>
                 </div>
                 <nav class="collapse navbar-collapse" role="navigation">
-                  <form class="navbar-form navbar-left" method="GET" action="./tools/ControlFriend">
+                  <form class="navbar-form navbar-left" method="GET" action="./other.jsp">
                     <div class="input-group input-group-sm" style="max-width:360px;">
                       <input list="name" type="text" class="form-control" placeholder="Rechercher un ami" name="friendToDisplayProfilId">
                       <input type="hidden" value="true" name="friendToDisplayProfil">
