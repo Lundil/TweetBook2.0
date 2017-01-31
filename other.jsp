@@ -31,14 +31,27 @@
     
   <jsp:useBean id="user" type="tools.User" scope="session" />
   <%
-    User other = (User) session.getAttribute("other"); 
-    //ajout des publications et des amis au profil
-    model.initialize();
-    other.setPublications(model.getPublication(other));
-    model.initialize();
-    other.setFriends(model.getFriend(other));
-    model.initialize();
-    int countOtherFriend = model.getNumberOfFriend(other);
+
+    User other = null;
+    Model model = new Model();
+
+    //récupère les infos de l'utilisateur pour afficher son profil
+    if(request.getParameter("friendToDisplayProfil") != null){
+      if(request.getParameter("friendToDisplayProfil").equals("true")){
+        model.initialize();
+        other = model.getFriend(Integer.valueOf(request.getParameter(request.getParameter("friendToDisplayProfilId"))));
+      }
+    }
+    if(other != null){
+      //ajout des publications et des amis au profil
+      model.initialize();
+      other.setPublications(model.getPublication(other));
+      model.initialize();
+      other.setFriends(model.getFriend(other));
+      model.initialize();
+      int countOtherFriend = model.getNumberOfFriend(other);
+    }
+    
     %>
 
       <div class="wrapper">

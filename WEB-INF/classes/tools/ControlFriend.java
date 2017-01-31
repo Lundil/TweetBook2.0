@@ -21,17 +21,8 @@ public class ControlFriend extends HttpServlet{
 				Model model = new Model();
 				model.initialize();
 
-				//récupère les infos de l'utilisateur pour afficher son profil
-				if(request.getParameter("friendToDisplayProfil") != null){
-					if(request.getParameter("friendToDisplayProfil").equals("true")){
-						User other = model.getFriend(Integer.valueOf(request.getParameter(request.getParameter("friendToDisplayProfilId"))));
-						session.setAttribute(("other"), other);
-						response.sendRedirect("../other.jsp");
-					}
-				}
-
 				//ajoute un ami
-				else if(request.getParameter("addFriend") != null){
+				if(request.getParameter("addFriend") != null){
 					if(request.getParameter("addFriend").equals("true")){
 						model.addFriend(Integer.valueOf(request.getParameter("addFriendId")), user);
 						model.initialize();
@@ -44,7 +35,7 @@ public class ControlFriend extends HttpServlet{
 				else if(request.getParameter("getPotentialFriends") != null){
 					if(request.getParameter("getPotentialFriends").equals("true")){
 						ArrayList<User> potentialFriends = model.getPotientialFriend(user);
-						session.setAttribute(("potentialFriends"), potentialFriends);
+						//response.setParameter(("potentialFriends"), potentialFriends);
 						response.sendRedirect("../amis.jsp");
 					}
 				}
