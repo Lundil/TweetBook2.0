@@ -145,4 +145,7 @@ public class User{
 	public ArrayList<Group> getGroups(){
 		return this.groups;
 	}
+	public ArrayList<User> getFriends(){
+		return this.friends;
+	}
 }

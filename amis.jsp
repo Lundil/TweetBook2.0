@@ -14,6 +14,7 @@
     <%@ page contentType="text/html; charset=UTF-8" %>
     <!--   import de servlet   -->
     <%@ page import="java.io.*" %>
+    <%@ page import="tools.*" %>
     <%@ page import="javax.servlet.*" %>
     <%@ page import="javax.servlet.http.*" %>
     <%@ page import="javax.servlet.annotation.WebServlet" %>
@@ -67,6 +68,7 @@
     </script>
   </head>
   <body>
+  <jsp:useBean id="user" type="tools.User" scope="session" />
       <div class="wrapper">
         <div class="box">
           <div class="row row-offcanvas row-offcanvas-left">
@@ -144,18 +146,9 @@
               <div class="col-sm-5">
                 <div class="panel panel-default">
                   <div class="panel-body">
-                  <%Class.forName("org.postgresql.Driver");
-                    Connection con = DriverManager.getConnection("jdbc:postgresql://psqlserv/da2i","lamarqux", "moi");
-                    Statement stmt= con.createStatement();
-                    String debut = "n";
-                    String query = "SELECT * FROM personne WHERE  nom LIKE '"+debut+"%' ";
-                    ResultSet rs = stmt.executeQuery(query);%>
-                    <%while(rs.next()){
-                          out.print(rs.getString("nom"));%>
-                          <br>
-                        <%}
-                  con.close(); %>
-                    <p class="lead">(Requete tout amis)</p>
+                  <% for(User user : user.getFriends()){ %>
+                  <% } %>
+                  <p class="lead">(Requete tout amis)</p>
                   </div>
                 </div>
               </div>

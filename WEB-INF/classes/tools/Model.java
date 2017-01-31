@@ -79,6 +79,34 @@ public class Model{
 		}
 	}
 
+	/** récupère une liste des liens de photo des 5 premiers amis d'un utilisateur
+	* @param user : User
+	* @return String */
+	public ArrayList<String> getProfilPhotoOf5Friend(User user){
+		int i = 0;
+		ArrayList<String> photos = new ArrayList<String>();
+		try{
+			statement = connection.prepareStatement("select profilPhoto from users where IDUser in (select IDUser2 from friendsWith where IDUser1 = ?) group by LastName order by LastName asc");
+			statement.setInt(1,user.getId());
+			result = statement.executeQuery();
+			while(result.next() && i <5)
+				photos.add(result.getString(1));
+
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally{
+			try{
+				result.close();
+				statement.close();
+				connection.close();
+				return photos;
+			} catch(Exception e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+
 	/** récupère les informations sur l'utilisateur à partir de son ID
 	* @param id : String
 	* @return User */
