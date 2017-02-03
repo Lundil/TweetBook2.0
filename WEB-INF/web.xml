@@ -55,4 +55,13 @@
       <role-name>role2</role-name>
     </security-role> 
 
+
+    <!-- Test utf-8 -->
+    <jsp-config>
+       <jsp-property-group>
+           <description>Config. de l'encodage des pages JSP</description>
+           <url-pattern>*.jsp</url-pattern>
+           <page-encoding>UTF-8</page-encoding>
+       </jsp-property-group>
+    </jsp-config>
 </web-app>

@@ -5,13 +5,12 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>TweetBook</title>
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />
     <%@ page import="java.util.*" %>
     <%@ page import="java.sql.*" %>
     <%@ page import="java.sql.ResultSet" %>
     <%@ page import="java.sql.ResultSetMetaData" %>
     <%@ page session="true" %>
-    <%@ page errorPage="erreur.jsp" %>
-    <%@ page contentType="text/html; charset=UTF-8" %>
     <!--   import de servlet   -->
     <%@ page import="java.io.*" %>
     <%@ page import="tools.*" %>
@@ -20,6 +19,7 @@
     <%@ page import="javax.servlet.annotation.WebServlet" %>
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -144,39 +144,36 @@
                 </nav>
               </div>
               <!-- /top nav -->
-
               <div class="padding">
               <div class="full col-sm-9">
-
               <!-- content -->                      
               <div class="row">
-
               <!-- main col right -->
               <div class="col-sm-7">
+                <div class="well"> 
+                  <div class="form-group" style="padding:14px;">
+                  <h4>Quoi de neuf chez les autres ?</h4>
+                  </div>
                 <% model = new Model(); %>
                 <% model.initialize(); %>
                 <% for(Publication publication : model.getFriendsPublication(user)){ %>
 
-                    <div class="well">
-                      <div class="panel panel-default">
-                        <div class="panel-heading"><h4><%= publication.getTitle() %></h4></div>
-                        <div class="panel-body">
-                          <p>publié par <%= publication.getFirstNameAuthor() %> <%= publication.getLastNameAuthor() %><br>le <%= publication.getDate() %></p>
-                          <hr>
-                          <p><%= publication.getContent() %></p>
-                          <div class="clearfix"></div>
-                          <hr>
-                        </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading"><h4><%= publication.getTitle() %></h4></div>
+                      <div class="panel-body">
+                        <p>publié par <%= publication.getFirstNameAuthor() %> <%= publication.getLastNameAuthor() %><br>le <%= publication.getDate() %></p>
+                        <hr>
+                        <p><%= publication.getContent() %></p>
+                        <div class="clearfix"></div>
+                        <hr>
                       </div>
                     </div>
-
                   <% } %>
                   <h4 class="text-center">
               <a href="https://da2i.univ-lille1.fr/" target="ext">TweetBook DA2I 2016-2017</a>
               </h4>
               <hr>
               </div><!--/row-->
-              
               </div><!-- /col-9 -->
               </div><!-- /padding -->
             </div>

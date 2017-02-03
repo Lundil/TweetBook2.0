@@ -5,12 +5,12 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>TweetBook</title>
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />
     <%@ page import="java.util.*" %>
     <%@ page import="java.sql.*" %>
     <%@ page import="java.sql.ResultSet" %>
     <%@ page import="java.sql.ResultSetMetaData" %>
     <%@ page session="true" %>
-    <%@ page contentType="text/html; charset=UTF-8" %>
     <!--   import de servlet   -->
     <%@ page import="java.io.*" %>
     <%@ page import="tools.*" %>
@@ -57,17 +57,6 @@
 });
 });
     </script>
-    <script>
-      $(document).ready(function() {
-         $('.hover').mousemove(function(e){
-            var hovertext = $(this).attr('hinttext');
-               $('#hintbox').text(hovertext).show();
-         $('#hintbox').css('top',e.clientY-15).css('left',e.clientX+30);})
-         .mouseout(function(){
-            $('#hintbox').hide();
-         });
-      });
-   </script>
   </head>
   <body>
 
@@ -147,7 +136,7 @@
                   <form class="navbar-form navbar-left" method="GET" action="./other.jsp">
                     <div class="input-group input-group-sm" style="max-width:360px;">
                       <!-- Hidden -->
-                      <input type="hidden" value="true" name="friendToDisplayProfil">
+                      <input type="hidden" name="friendToDisplayProfil" value="true">
                       <input type="hidden" name="friendToDisplayProfilId" id="answerInput-hidden">
                       <!-- Id recupere -->
                       <input list="suggestionList" type="text" class="form-control" placeholder="Rechercher un ami" name="friendToDisplayProfilId" id="answerInput">
@@ -219,7 +208,6 @@
               <!-- main col right -->
               <div class="col-sm-7">
                 <div class="well"> 
-
                   <form class="form-horizontal" role="form" action="tools/ControlPublication" method="POST">
                     <h4>Quoi de neuf <%= user.getFirstName() %> ?</h4>
                     <div class="form-group" style="padding:14px;">
@@ -230,17 +218,13 @@
                       <textarea class="form-control" name="contentNewPublication" placeholder="Publier un message"></textarea>
                     </div>
                     <input type="hidden" name="newPublication" value="true">
-                    <button class="btn btn-primary pull-right" type="submit">Post</button>
-                      <ul class="list-inline">
-                        <li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
-                        <li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
-                        <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
-                      </ul>
+                    <button class="btn btn-primary pull-right" type="submit">Publier</button>
                   </form>
-
                 </div>
+
                 <% model.initialize(); %>
-                <% for(Publication publication : user.getPublications()) { %>
+                <% request.setCharacterEncoding("UTF-8"); 
+                for(Publication publication : user.getPublications()) { %>
                 <div class="panel panel-default">
                   <div class="panel-heading"><h4><%= publication.getTitle() %></h4></div>
                   <div class="panel-body">
@@ -259,10 +243,9 @@
                     </form>
                   </div>
                 </div>
-                </div>
                 <% } %>
-
               </div>
+
               </div><!--/row-->
               <h4 class="text-center">
               <a href="https://da2i.univ-lille1.fr/" target="ext">TweetBook DA2I 2016-2017</a>

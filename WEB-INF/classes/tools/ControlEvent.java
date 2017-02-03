@@ -14,7 +14,8 @@ public class ControlEvent extends HttpServlet
 	User user = null;
 	public void service( HttpServletRequest request, HttpServletResponse response){
 		try{
-
+			response.setContentType("text/html; charset=UTF-8");
+			response.setCharacterEncoding("UTF-8");
 			session = request.getSession(true);
 			user = (User) session.getAttribute("user");
 			if(user != null){

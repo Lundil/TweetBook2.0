@@ -12,6 +12,8 @@ public class connexion extends HttpServlet
 {
 	public void service( HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
 	{
+		response.setContentType("text/html; charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		response.sendRedirect("./profil.jsp");
 	}
 }

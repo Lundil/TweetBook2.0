@@ -15,7 +15,6 @@ public class ControlUser extends HttpServlet{
 		try{
 
 			Model model = new Model();
-
 			//inscription
 			if(request.getParameter("signin") != null){
 				if(request.getParameter("signin").equals("true")){
@@ -27,6 +26,8 @@ public class ControlUser extends HttpServlet{
 					(String) request.getParameter("inAddress"), (String) request.getParameter("inLogin"),
 					(String) request.getParameter("inPassword"));
 					System.out.println("inscription réussie");
+					response.setContentType("text/html; charset=UTF-8");
+					response.setCharacterEncoding("UTF-8");
 					response.sendRedirect("../signup.html");
 				}
 			}

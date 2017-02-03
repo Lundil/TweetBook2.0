@@ -12,6 +12,8 @@ public class deconnexion extends HttpServlet
 {
 	public void service( HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
 	{
+		response.setContentType("text/html; charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		//Récupère session actuelle
     	HttpSession session = request.getSession();
     	//Kill la session
